@@ -18,6 +18,7 @@ public class SunsetFragment extends Fragment {
 
     private View mSceneView;
     private View mSunView;
+    private View mShadowView;
     private View mSkyView;
 
     private int mBlueSkyColor;
@@ -29,6 +30,8 @@ public class SunsetFragment extends Fragment {
 
     private boolean mSunset = true;
 
+    public static final int DURATION = 3000;
+
     public static SunsetFragment newInstance() {
         return new SunsetFragment();
     }
@@ -36,11 +39,12 @@ public class SunsetFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+
         View view = inflater.inflate(R.layout.fragment_sunset, container, false);
 
         mSceneView = view;
         mSunView = view.findViewById(R.id.sun);
+        mShadowView = view.findViewById(R.id.shadow);
         mSkyView = view.findViewById(R.id.sky);
 
         mSceneView.setOnClickListener(new View.OnClickListener() {
@@ -70,23 +74,33 @@ public class SunsetFragment extends Fragment {
         float sunYStart = mSkyView.getHeight();
         float sunYEnd = mSunView.getTop();
 
-        ObjectAnimator heightAnimator = ObjectAnimator.ofFloat(mSunView, "y",
-                sunYStart, sunYEnd)
-                .setDuration(3000);
+        float shadowYStart = -mShadowView.getHeight();
+        float shadowYEnd = mShadowView.getTop();
 
-        heightAnimator.setInterpolator(new DecelerateInterpolator());
+        ObjectAnimator sunHeightAnimator = ObjectAnimator.ofFloat(mSunView, "y",
+                sunYStart, sunYEnd)
+                .setDuration(DURATION);
+
+        sunHeightAnimator.setInterpolator(new DecelerateInterpolator());
+
+        ObjectAnimator shadowHeightAnimator = ObjectAnimator.ofFloat(mShadowView, "y",
+                shadowYStart, shadowYEnd)
+                .setDuration(DURATION);
+
+        shadowHeightAnimator.setInterpolator(new DecelerateInterpolator());
 
         ObjectAnimator sunriseSkyAnimator = ObjectAnimator.ofObject(mSkyView, "backgroundColor",
                 new ArgbEvaluator(), mSunsetSkyColor, mBlueSkyColor)
-                .setDuration(3000);
+                .setDuration(DURATION);
 
         ObjectAnimator nightSkyAnimator = ObjectAnimator.ofObject(mSkyView, "backgroundColor",
                 new ArgbEvaluator(), mNightSkyColor, mSunsetSkyColor)
-                .setDuration(3000);
+                .setDuration(DURATION);
 
         AnimatorSet animatorSet = new AnimatorSet();
         animatorSet
-                .play(heightAnimator)
+                .play(sunHeightAnimator)
+                .with(shadowHeightAnimator)
                 .with(sunriseSkyAnimator)
                 .after(nightSkyAnimator);
 
@@ -97,23 +111,33 @@ public class SunsetFragment extends Fragment {
         float sunYStart = mSunView.getTop();
         float sunYEnd = mSkyView.getHeight();
 
-        ObjectAnimator heightAnimator = ObjectAnimator.ofFloat(mSunView, "y",
-                sunYStart, sunYEnd)
-                .setDuration(3000);
+        float shadowYStart = mShadowView.getTop();
+        float shadowYEnd = -mShadowView.getHeight();
 
-        heightAnimator.setInterpolator(new AccelerateInterpolator());
+        ObjectAnimator sunHeightAnimator = ObjectAnimator.ofFloat(mSunView, "y",
+                sunYStart, sunYEnd)
+                .setDuration(DURATION);
+
+        sunHeightAnimator.setInterpolator(new AccelerateInterpolator());
+
+        ObjectAnimator shadowHeightAnimator = ObjectAnimator.ofFloat(mShadowView, "y",
+                shadowYStart, shadowYEnd)
+                .setDuration(DURATION);
+
+        shadowHeightAnimator.setInterpolator(new AccelerateInterpolator());
 
         ObjectAnimator sunsetSkyAnimator = ObjectAnimator.ofObject(mSkyView, "backgroundColor",
                 new ArgbEvaluator(), mBlueSkyColor, mSunsetSkyColor)
-                .setDuration(3000);
+                .setDuration(DURATION);
 
         ObjectAnimator nightSkyAnimator = ObjectAnimator.ofObject(mSkyView, "backgroundColor",
                 new ArgbEvaluator(), mSunsetSkyColor, mNightSkyColor)
-                .setDuration(3000);
+                .setDuration(DURATION);
 
         AnimatorSet animatorSet = new AnimatorSet();
         animatorSet
-                .play(heightAnimator)
+                .play(sunHeightAnimator)
+                .with(shadowHeightAnimator)
                 .with(sunsetSkyAnimator)
                 .before(nightSkyAnimator);
 
