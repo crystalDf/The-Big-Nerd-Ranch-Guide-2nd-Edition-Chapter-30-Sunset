@@ -5,4 +5,6 @@
     <color name="sun_set_sky">#EC8100</color>
     <color name="night_sky">#05192E</color>
     <color name="sea">#224869</color>
+    <color name="heat_sun">#FFFF0000</color>
+    <color name="cold_sun">#00FF0000</color>
 </resources>
