@@ -40,8 +40,6 @@ public class SunsetFragment extends Fragment {
     private AnimatorSet mSunsetAnimatorSet;
     private AnimatorSet mSunriseAnimatorSet;
 
-    private boolean halfWay;
-
     public static SunsetFragment newInstance() {
         return new SunsetFragment();
     }
@@ -220,7 +218,6 @@ public class SunsetFragment extends Fragment {
                 .before(nightSkyAnimator);
 
         mSunsetAnimatorSet.start();
-
     }
 
     private void startSunPulsateAnimation() {
