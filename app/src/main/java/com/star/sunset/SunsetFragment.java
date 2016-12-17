@@ -7,6 +7,7 @@ import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -77,12 +78,12 @@ public class SunsetFragment extends Fragment {
             }
         });
 
-        mBlueSkyColor = getResources().getColor(R.color.blue_sky);
-        mSunsetSkyColor = getResources().getColor(R.color.sun_set_sky);
-        mNightSkyColor = getResources().getColor(R.color.night_sky);
+        mBlueSkyColor = ContextCompat.getColor(getActivity(), R.color.blue_sky);
+        mSunsetSkyColor = ContextCompat.getColor(getActivity(), R.color.sun_set_sky);
+        mNightSkyColor = ContextCompat.getColor(getActivity(), R.color.night_sky);
 
-        mHeatSunColor = getResources().getColor(R.color.heat_sun);
-        mColdSunColor = getResources().getColor(R.color.cold_sun);
+        mHeatSunColor = ContextCompat.getColor(getActivity(), R.color.heat_sun);
+        mColdSunColor = ContextCompat.getColor(getActivity(), R.color.cold_sun);
 
         return view;
     }
